@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtSignOptions } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -46,7 +47,7 @@ import { JwtModule } from '@nestjs/jwt';
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
           expiresIn: configService.get<string>('JWT_EXPIRES_IN') || '15m',
-        } as any,
+        } as JwtSignOptions, // أكثر أماناً من any
       }),
       inject: [ConfigService],
     }),
